@@ -1,0 +1,25 @@
+Configuration,Model,Accuracy (%),Precision (%),Recall (%),F1-Score (%),Train Time (s)
+Baseline,Decision Tree,76.08,79.54,76.08,71.9,2.06
+Baseline,Random Forest,75.12,81.53,75.12,70.99,6.52
+Baseline,KNN,74.96,80.25,74.96,70.56,0.06
+Baseline,Logistic Regression,76.21,75.53,76.21,71.44,15.56
+Baseline,XGBoost,75.74,79.75,75.74,71.04,7.25
+Baseline,Naive Bayes,43.3,55.81,43.3,34.7,0.2
+With SMOTE,Decision Tree,74.33,72.39,74.33,69.97,12.7
+With SMOTE,Random Forest,74.55,80.0,74.55,70.15,26.77
+With SMOTE,KNN,75.61,79.94,75.61,71.53,0.21
+With SMOTE,Logistic Regression,79.21,82.59,79.21,77.76,91.63
+With SMOTE,XGBoost,77.65,82.93,77.65,74.71,20.43
+With SMOTE,Naive Bayes,45.28,53.4,45.28,37.93,0.62
+With FS,Decision Tree,73.51,69.25,73.51,69.35,1.04
+With FS,Random Forest,75.03,79.69,75.03,70.32,6.17
+With FS,KNN,75.76,80.16,75.76,72.0,0.03
+With FS,Logistic Regression,71.61,71.72,71.61,66.76,7.18
+With FS,XGBoost,77.82,76.91,77.82,73.76,4.83
+With FS,Naive Bayes,68.88,75.71,68.88,70.72,0.11
+SMOTE + FS,Decision Tree,73.37,77.95,73.37,70.51,3.0
+SMOTE + FS,Random Forest,74.99,79.65,74.99,70.41,16.16
+SMOTE + FS,KNN,76.43,77.5,76.43,73.14,0.07
+SMOTE + FS,Logistic Regression,74.47,76.23,74.47,73.13,47.42
+SMOTE + FS,XGBoost,78.39,83.03,78.39,74.82,14.73
+SMOTE + FS,Naive Bayes,68.97,74.36,68.97,70.91,0.28
