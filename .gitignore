@@ -21,6 +21,17 @@ models/*.pkl
 data/*.txt
 data/*.csv
 
+# Derived preprocessing artifacts (regenerate via kar/test.ipynb Step 1)
+data/processed/
+
+# Third-party sources cloned by kar/test.ipynb (EvoloPy)
+external/
+
+# Pipeline logs
+*.log
+
+# Results - plots, metrics tables, confusion matrices (committed for reproducibility)
+
 # IDE
 .vscode/
 .idea/
