@@ -39,3 +39,6 @@ external/
 # OS
 .DS_Store
 Thumbs.db
+
+# Learning & Interview Guide (local documentation)
+LEARNING_AND_INTERVIEW_GUIDE.md
