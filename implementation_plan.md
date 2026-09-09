@@ -8,7 +8,7 @@ This document establishes the architecture and collaboration plan for the Hierar
 
 | Phase | Description | Environment | Primary Owner |
 |---|---|---|---|
-| **Part 1: Modelling** | ML Pipeline, Preprocessing, Evolutionary Feature Selection, Hierarchical Model Suites & Benchmark Matrix | Python (`scikit-learn`, `EvoloPy`, `lightgbm`, `xgboost`, `catboost`) | **Collaborator 1 (You) & Collaborator 2 (Kartikeya)** |
+| **Part 1: Modelling** | ML Pipeline, Preprocessing, Evolutionary Feature Selection, Hierarchical Model Suites & Benchmark Matrix | Python (`scikit-learn`, `EvoloPy`, `lightgbm`, `xgboost`, `catboost`) | **`4kub0` & `lemonkartikeya`** |
 | **Part 2: Simulation & Deployment** | Network Topology Design, Edge/Fog/Cloud Node Deployment, Fault-Tolerance & Failover Simulation | Java (`iFogSim` / Maven) | **Collaborator 3 (Separate Team Member)** |
 
 ---
@@ -43,14 +43,14 @@ Part 1 focuses on developing the hierarchical intelligence of the system.
 
 ---
 
-## 3. Collaborative Split for Part 1 (Between You & Kartikeya)
+## 3. Collaborative Split for Part 1 (Between `4kub0` & `lemonkartikeya`)
 
 To ensure **both developers work on and learn machine learning**, work is divided by **model families** while sharing standard contracts:
 
 | Track | Owner | Models Assigned | Learning Focus | Exclusive Source Files |
 |---|---|---|---|---|
-| **Tree & Instance Ensembles** | **You** | • **Decision Trees** & **Random Forest**<br>• **Extra Trees (Extremely Randomized Trees)**<br>• **Baseline**: Naive Bayes / KNN | • Tree-based decision boundaries<br>• Hyperparameter tuning (`max_depth`, `min_samples_split`, `class_weight`)<br>• Microsecond latency profiling | `src/models/tree_models.py`<br>`tests/test_tree_models.py` |
-| **Gradient Boosted Trees** | **Kartikeya** | • **LightGBM** (histogram / leaf-wise)<br>• **XGBoost** (exact greedy / regularized)<br>• **CatBoost** (symmetric / categorical) | • Gradient boosting mechanics<br>• Residual loss minimization<br>• Multiclass loss functions on imbalanced data | `src/models/boosting_models.py`<br>`tests/test_boosting_models.py` |
+| **Tree & Instance Ensembles** | **`4kub0`** | • **Decision Trees** & **Random Forest**<br>• **Extra Trees (Extremely Randomized Trees)**<br>• **Baseline**: Naive Bayes / KNN | • Tree-based decision boundaries<br>• Hyperparameter tuning (`max_depth`, `min_samples_split`, `class_weight`)<br>• Microsecond latency profiling | `src/models/tree_models.py`<br>`tests/test_tree_models.py` |
+| **Gradient Boosted Trees** | **`lemonkartikeya`** | • **LightGBM** (histogram / leaf-wise)<br>• **XGBoost** (exact greedy / regularized)<br>• **CatBoost** (symmetric / categorical) | • Gradient boosting mechanics<br>• Residual loss minimization<br>• Multiclass loss functions on imbalanced data | `src/models/boosting_models.py`<br>`tests/test_boosting_models.py` |
 
 ---
 
@@ -71,25 +71,25 @@ IDS-NSL-KDD/
 │   ├── models/
 │   │   ├── __init__.py           # Dynamic Model Registry
 │   │   ├── base.py               # Abstract BaseIDSModel (.fit, .predict, .evaluate)
-│   │   ├── tree_models.py        # [EXCLUSIVE: YOU]
-│   │   └── boosting_models.py    # [EXCLUSIVE: KARTIKEYA]
+│   │   ├── tree_models.py        # [EXCLUSIVE: 4kub0]
+│   │   └── boosting_models.py    # [EXCLUSIVE: lemonkartikeya]
 │   └── evaluation/
 │       ├── cascade.py            # Hierarchical L1 -> L2 triage runner
 │       ├── evaluator.py          # Benchmark runner (iterates registry)
 │       └── reporter.py           # Comparison tables & plots
 ├── tests/
-│   ├── test_tree_models.py       # [EXCLUSIVE: YOU]
-│   └── test_boosting_models.py   # [EXCLUSIVE: KARTIKEYA]
+│   ├── test_tree_models.py       # [EXCLUSIVE: 4kub0]
+│   └── test_boosting_models.py   # [EXCLUSIVE: lemonkartikeya]
 └── notebooks/
-    ├── dev_user/                 # Your personal scratchpad
-    └── kar/                      # Kartikeya's personal scratchpad (test.ipynb)
+    ├── dev_4kub0/                # 4kub0's personal scratchpad
+    └── kar/                      # lemonkartikeya's personal scratchpad (test.ipynb)
 ```
 
 ### Git Auto-Merge Rules:
 1. **Contract-Driven**: Both agents implement `BaseIDSModel` (`.fit(X, y)`, `.predict(X)`, `.evaluate(X, y)`).
-2. **File Isolation**: Your agent touches `src/models/tree_models.py`; Kartikeya's agent touches `src/models/boosting_models.py`. Git merges them automatically without conflicts.
+2. **File Isolation**: `4kub0`'s agent touches `src/models/tree_models.py`; `lemonkartikeya`'s agent touches `src/models/boosting_models.py`. Git merges them automatically without conflicts.
 3. **Registry Pattern**: `src/models/__init__.py` registers all models dynamically. The benchmark runner loads all models without either agent modifying the runner script.
-4. **Isolated Notebooks**: Scratchpads live in personal directories (`notebooks/dev_user/` and `kar/`). Git never attempts to merge conflicting notebook JSON.
+4. **Isolated Notebooks**: Scratchpads live in personal directories (`notebooks/dev_4kub0/` and `kar/`). Git never attempts to merge conflicting notebook JSON.
 
 ---
 
@@ -107,8 +107,8 @@ IDS-NSL-KDD/
 
 1. **Step 1 (Contracts & Setup)**: Establish `src/contracts.py` and `src/models/base.py`. Ensure preprocessed data artifacts (`data/processed/`) and feature subsets (`feature_subsets.pkl`) are in place.
 2. **Step 2 (Concurrent Model Training)**:
-   - You build and test `src/models/tree_models.py`.
-   - Kartikeya builds and tests `src/models/boosting_models.py`.
+   - `4kub0` builds and tests `src/models/tree_models.py`.
+   - `lemonkartikeya` builds and tests `src/models/boosting_models.py`.
 3. **Step 3 (Checkpoint Review)**: Verify unit tests (`tests/test_tree_models.py` and `tests/test_boosting_models.py`). Compare latency vs. Recall trade-offs.
 4. **Step 4 (Cascade Evaluation & Benchmarking)**: Run the full 36-experiment matrix across both levels and output `results/comparison_results.csv` and Pareto plots.
 5. **Step 5 (Handoff to Part 2)**: Export top-performing Level 1 and Level 2 models (ONNX / PMML / joblib) to Collaborator 3 for iFogSim simulation.
