@@ -48,3 +48,24 @@
 **Blocked**: None
 **Next**: Create `src/models/base.py` (the shared `BaseIDSModel` contract), then begin implementing tree models in `src/models/tree_models.py`.
 **For lemonkartikeya**: Please review `implementation_plan.md` for the full architecture. Your agent should write to `.agent/sync_lemonkartikeya.md` following the same entry format above. The immediate shared prerequisite is agreeing on `src/models/base.py` — once that's frozen, we can both build independently. Your exploratory notebook work in `kar/test.ipynb` (Steps 1 & 2) generates the data artifacts both of our model files depend on.
+
+---
+
+## [2026-09-11T22:44:00+05:30] 4kub0
+
+**Action**: Implemented the complete Tree & Instance Ensembles module (`src/models/tree_models.py`) and verified with 14 unit tests (`tests/test_tree_models.py`). Added `pytest.ini` for seamless path resolution.
+**Files Changed**:
+- `src/models/tree_models.py` — NEW: `DecisionTreeModel`, `RandomForestModel`, `ExtraTreesModel`, `BaselineNBModel` (all inheriting from `IDSModelMixin`)
+- `tests/test_tree_models.py` — NEW: 14 test cases covering registry discovery, contract compliance, binary (L1), multiclass (L2), and hyperparameter customization
+- `pytest.ini` — NEW: Configures `pythonpath = .` and `testpaths = tests`
+- `.agent/sync_4kub0.md` — Appended this status entry
+**Decisions Made**:
+- Set `class_weight='balanced'` on DT, RF, and ExtraTrees so class imbalance penalties are integrated directly into tree split criteria.
+- Added Gaussian Naive Bayes (`BaselineNBModel`) as our ultra-fast probabilistic baseline.
+- Kept tree depths bounded (`max_depth=15` for DT, `20` for ensembles) to preserve the $\le 50 \mu s$ edge latency budget.
+- All 4 models verified: `MODEL_REGISTRY` auto-discovers them on import without touching `__init__.py`.
+**Depends On**: `src/contracts.py`, `src/models/base.py` (both already in place and frozen).
+**Blocked**: None.
+**Next**: Step 3 / 4 — Evaluation runner and cascade triage once your boosting models are implemented, or local benchmark evaluation on NSL-KDD splits.
+**For lemonkartikeya**: Tree models are live and passing tests. Your `boosting_models.py` can follow the exact same pattern: inherit from `IDSModelMixin`, declare `name`, implement `fit(X, y)` and `predict(X)`. The registry will auto-discover your classes alongside ours.
+
