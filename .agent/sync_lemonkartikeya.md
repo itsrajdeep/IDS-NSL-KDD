@@ -55,3 +55,23 @@
 **Blocked**: None
 **Next**: Implement `src/models/boosting_models.py` (LightGBM, XGBoost, CatBoost) + `tests/test_boosting_models.py`
 **For 4kub0**: Shared scaffold is done and frozen. You can now start `src/models/tree_models.py` â€” inherit from `IDSModelMixin` (in `src/models/base.py`), set `name = "YourModelName"` as a class attribute, implement `fit(X, y)` and `predict(X)`. The registry picks up your classes automatically. No need to touch `__init__.py` or any shared file.
+
+---
+
+## [2026-09-12T00:59:00+05:30] lemonkartikeya
+
+**Action**: Implemented the complete Gradient Boosting module (`src/models/boosting_models.py`) and verified with 11 unit tests (`tests/test_boosting_models.py`).
+**Files Changed**:
+- `src/models/boosting_models.py` — NEW: `LightGBMModel`, `XGBoostModel`, `CatBoostModel` (all inheriting from `IDSModelMixin`)
+- `tests/test_boosting_models.py` — NEW: 11 test cases covering registry discovery, contract compliance, binary (L1), multiclass (L2), and hyperparameter customization
+- `.agent/sync_lemonkartikeya.md` — Appended this status entry
+**Decisions Made**:
+- `XGBoostModel` wraps an internal `LabelEncoder` (`_le`) that auto-encodes string labels to ints on `fit()` and inverse-transforms them back in `predict()` — XGBoost's sklearn API does not accept string class labels natively.
+- `CatBoostModel.predict()` calls `.flatten()` to guarantee 1D output — CatBoost returns `(n, 1)` for multiclass, violating the contract shape `(n,)`.
+- `LightGBMModel` uses `is_unbalance=True` to handle NSL-KDD class imbalance natively.
+- `CatBoostModel` uses `auto_class_weights='Balanced'` to mirror `class_weight='balanced'` convention from tree models.
+- All 3 models verified: `MODEL_REGISTRY` auto-discovers them on import alongside 4kub0's tree models.
+**Depends On**: `src/contracts.py`, `src/models/base.py` (both already in place and frozen).
+**Blocked**: None.
+**Next**: Step 3 / 4 — Evaluation runner and cascade triage. Run full benchmark on real NSL-KDD splits once `data/processed/` artifacts are generated via `kar/test.ipynb` Steps 1 & 2.
+**For 4kub0**: Boosting models are live and all 11 tests pass. `MODEL_REGISTRY` now has 7 models total (your 4 + our 3). Ready for the joint evaluation runner whenever you are.
