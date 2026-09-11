@@ -42,3 +42,6 @@ Thumbs.db
 
 # Learning & Interview Guide (local documentation)
 LEARNING_AND_INTERVIEW_GUIDE.md
+
+# CatBoost training logs
+catboost_info/
